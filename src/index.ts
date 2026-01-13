@@ -13,11 +13,16 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://ug4jqnv8t.localto.net/',
-    'https://wo9hhkufr.localto.net/'
+    'https://ug4jqnv8t.localto.net',
+    'https://wo9hhkufr.localto.net'
   ],
-  credentials: true
+  credentials: true,
+  exposedHeaders: ['Set-Cookie'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
+// app.use(session({ }))
+
 app.use(express.json());
 app.use(cookieParser());
 

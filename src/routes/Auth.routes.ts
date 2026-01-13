@@ -18,8 +18,8 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
-    res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'lax', maxAge: 60 * 60 * 1000 });  // Secure: true di production
+    const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+    res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 7 * 24 * 60 * 60 * 1000 });
     res.json({ message: 'Login successful' });
   } catch (error) {
     res.status(500).json({ message: 'Login failed' });
@@ -27,7 +27,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('token', { httpOnly: true, secure: false, sameSite: 'lax' });
+  res.clearCookie('token', { httpOnly: true, secure: true, sameSite: 'none' });
   res.json({ message: 'Logout successful' });
 });
 
